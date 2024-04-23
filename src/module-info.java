@@ -1,6 +1,8 @@
 module gui {
     requires javafx.fxml;
     requires javafx.controls;
-    opens gui to javafx.graphics;
+    //requires sme;
+    //requires com.pi4j;
+    //opens data to sme;
     exports gui;
 }

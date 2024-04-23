@@ -1,17 +1,18 @@
 package data;
 
-import java.util.ArrayList;
+//import sensor.SME280;
 
+import java.util.ArrayList;
 public class WeatherStation implements Subject {
 
-    private final SME280 sme280;
+    private final SME280Dummy sme280;
     private double temperature;
     private double pressure;
     private double humidity;
     private ArrayList<Observer> observers;
 
     public WeatherStation() {
-        sme280 = new SME280();
+        sme280 = new SME280Dummy();
         observers = new ArrayList<>();
         getSME280Data();
     }

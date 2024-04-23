@@ -1,6 +1,6 @@
 package data;
 
-public class SME280 {
+public class SME280Dummy {
 
     final double TEMP_MIN = 18.0;
     final double TEMP_MAX = 24.0;

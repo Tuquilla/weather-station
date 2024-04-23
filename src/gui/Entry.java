@@ -17,15 +17,15 @@ public class Entry extends Application implements Observer {
 
     private final WeatherStation weatherStation = new WeatherStation();
     private final DataFetch dataFetch = new DataFetch(weatherStation);
-    GridPane topLeftGridPane;
-    GridPane bottomLeftGridPane;
-    GridPane topRightGridPane;
-    GridPane bottomRightGridPane;
-    GridPane mainGridPane;
-    Label topLeftLabel;
-    Label bottomLeftLabel;
-    Label topRightLabel;
-    Label bottomRightLabel;
+    private GridPane topLeftGridPane;
+    private GridPane bottomLeftGridPane;
+    private GridPane topRightGridPane;
+    private GridPane bottomRightGridPane;
+    private GridPane mainGridPane;
+    private Label topLeftLabel;
+    private Label bottomLeftLabel;
+    private Label topRightLabel;
+    private Label bottomRightLabel;
 
 
     public static void main(String[] args) {
