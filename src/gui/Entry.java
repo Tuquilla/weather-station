@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -35,6 +36,8 @@ public class Entry extends Application implements Observer {
     public void start(Stage stage) {
         final int WINDOWSSIZE_X_TOTAL = 480;
         final int WINDOWSIZE_Y_TOTAL = 320;
+        Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/digital_7/digital-7.ttf"), 12);
+        System.out.println(font.getName());
         weatherStation.registerObserver(this);
         Thread weatherStationFetching = new Thread(dataFetch);
         weatherStationFetching.setDaemon(true);
@@ -73,7 +76,7 @@ public class Entry extends Application implements Observer {
         Label bottomRightTitle = new Label("Luftfeuchtigkeit");
         bottomRightTitle.setAlignment(Pos.TOP_CENTER);
         bottomRightTitle.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
-        bottomRightLabel = new Label(weatherStation.getHumidityString() + "%");
+        bottomRightLabel = new Label(weatherStation.getHumidityString() + " %");
         bottomRightLabel.setAlignment(Pos.CENTER);
         bottomRightLabel.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
         bottomRightLabel.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
@@ -107,17 +110,17 @@ public class Entry extends Application implements Observer {
         gridPane.addRow(1, label);
         gridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL/ 2.0);
         gridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
-        gridPane.getChildren().get(0).setStyle("-fx-font-size: 20; -fx-border-color: green;");
-        gridPane.getChildren().get(1).setStyle("-fx-font-size: 20; -fx-border-color: blue;");
+        //gridPane.getChildren().get(0).setStyle("-fx-font-family: 'Arial'; source: url('../../fonts/ds_digital/DS-DIGI.TTF'); -fx-font-size: 18; -fx-border-color: green;");
+        gridPane.getChildren().get(0).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 18;");
+        gridPane.getChildren().get(1).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 52;");
     }
 
     @Override
     public void update() {
         Platform.runLater(() -> {
-            //topLeftLabel = new Label(weatherStation.getTemperatureString() + " °C");
             topLeftLabel.setText(weatherStation.getTemperatureString() + " °C");
             topRightLabel.setText(weatherStation.getPressureString() + " hPa");
-            bottomRightLabel.setText(weatherStation.getHumidityString() + "%");
+            bottomRightLabel.setText(weatherStation.getHumidityString() + " %");
             topLeftGridPane.getChildren().remove(1);
             topRightGridPane.getChildren().remove(1);
             bottomRightGridPane.getChildren().remove(1);
