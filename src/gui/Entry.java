@@ -48,57 +48,46 @@ public class Entry extends Application implements Observer {
 
         Label topLeftTitle = new Label("Temperatur");
         topLeftTitle.setAlignment(Pos.TOP_CENTER);
+        topLeftTitle.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
         topLeftLabel = new Label(weatherStation.getTemperatureString() + " °C");
         topLeftLabel.setAlignment(Pos.CENTER);
+        topLeftLabel.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
+        topLeftLabel.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
 
         Label bottomLeftTitle = new Label("Testtitel");
         bottomLeftTitle.setAlignment(Pos.TOP_CENTER);
+        bottomLeftTitle.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
         bottomLeftLabel = new Label("leer");
         bottomLeftLabel.setAlignment(Pos.CENTER);
+        bottomLeftLabel.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
+        bottomLeftLabel.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
 
         Label topRightTitle = new Label("Luftdruck");
         topRightTitle.setAlignment(Pos.TOP_CENTER);
+        topRightTitle.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
         topRightLabel = new Label(weatherStation.getPressureString() + " hPa");
         topRightLabel.setAlignment(Pos.CENTER);
+        topRightLabel.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
+        topRightLabel.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
 
         Label bottomRightTitle = new Label("Luftfeuchtigkeit");
         bottomRightTitle.setAlignment(Pos.TOP_CENTER);
+        bottomRightTitle.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
         bottomRightLabel = new Label(weatherStation.getHumidityString() + "%");
         bottomRightLabel.setAlignment(Pos.CENTER);
+        bottomRightLabel.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
+        bottomRightLabel.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
 
-        topLeftGridPane.addRow(0, topLeftTitle);
-        topLeftGridPane.addRow(1, topLeftLabel);
-        topLeftGridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL);
-        topLeftGridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL/ 2.0);
-        topLeftGridPane.getChildren().get(0).setStyle("-fx-font-size: 20;");
-        topLeftGridPane.getChildren().get(1).setStyle("-fx-font-size: 20;");
+        createGridPane(WINDOWSSIZE_X_TOTAL, WINDOWSIZE_Y_TOTAL, topLeftTitle, topLeftGridPane, topLeftLabel);
         topLeftGridPane.setStyle("-fx-border-color: grey; -fx-border-width: 4px 2px 2px 4px; -fx-background-color: darkgrey;");
 
-        bottomLeftGridPane.addRow(0, bottomLeftTitle);
-        bottomLeftGridPane.addRow(1, bottomLeftLabel);
-        bottomLeftGridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL);
-        bottomLeftGridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL/ 2.0);
-        bottomLeftGridPane.setAlignment(Pos.CENTER);
-        bottomLeftGridPane.getChildren().get(0).setStyle("-fx-font-size: 20;");
-        bottomLeftGridPane.getChildren().get(1).setStyle("-fx-font-size: 20;");
+        createGridPane(WINDOWSSIZE_X_TOTAL, WINDOWSIZE_Y_TOTAL, bottomLeftTitle, bottomLeftGridPane, bottomLeftLabel);
         bottomLeftGridPane.setStyle("-fx-border-color: grey; -fx-border-width: 2px 2px 4px 4px; -fx-background-color: darkgrey;");
 
-        topRightGridPane.addRow(0, topRightTitle);
-        topRightGridPane.addRow(1, topRightLabel);
-        topRightGridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL/ 2.0);
-        topRightGridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
-        topRightGridPane.setAlignment(Pos.CENTER);
-        //topRightGridPane.getChildren().get(0).setStyle("-fx-font-size: 20;");
-        //topRightGridPane.getChildren().get(1).setStyle("-fx-font-size: 20;");
+        createGridPane(WINDOWSSIZE_X_TOTAL, WINDOWSIZE_Y_TOTAL, topRightTitle, topRightGridPane, topRightLabel);
         topRightGridPane.setStyle("-fx-border-color: grey; -fx-border-width: 4px 4px 2px 2px; -fx-background-color: darkgrey;");
 
-        bottomRightGridPane.addRow(0, bottomRightTitle);
-        bottomRightGridPane.addRow(1, bottomRightLabel);
-        bottomRightGridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL);
-        bottomRightGridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
-        bottomRightGridPane.setAlignment(Pos.CENTER);
-        bottomRightGridPane.getChildren().get(0).setStyle("-fx-font-size: 20;");
-        bottomRightGridPane.getChildren().get(1).setStyle("-fx-font-size: 20;");
+        createGridPane(WINDOWSSIZE_X_TOTAL, WINDOWSIZE_Y_TOTAL, bottomRightTitle, bottomRightGridPane, bottomRightLabel);
         bottomRightGridPane.setStyle("-fx-border-color: grey; -fx-border-width: 2px 4px 4px 2px; -fx-background-color: darkgrey;");
 
         mainGridPane.add(topLeftGridPane, 0, 0);
@@ -111,6 +100,15 @@ public class Entry extends Application implements Observer {
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
+    }
+
+    private void createGridPane(int WINDOWSSIZE_X_TOTAL, int WINDOWSIZE_Y_TOTAL, Label title, GridPane gridPane, Label label) {
+        gridPane.addRow(0, title);
+        gridPane.addRow(1, label);
+        gridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL/ 2.0);
+        gridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
+        gridPane.getChildren().get(0).setStyle("-fx-font-size: 20; -fx-border-color: green;");
+        gridPane.getChildren().get(1).setStyle("-fx-font-size: 20; -fx-border-color: blue;");
     }
 
     @Override
