@@ -1,4 +1,4 @@
-module gui {
+module src {
     requires javafx.fxml;
     requires javafx.controls;
     //requires sme;
