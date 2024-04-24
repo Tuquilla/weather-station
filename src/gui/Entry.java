@@ -36,8 +36,7 @@ public class Entry extends Application implements Observer {
     public void start(Stage stage) {
         final int WINDOWSSIZE_X_TOTAL = 480;
         final int WINDOWSIZE_Y_TOTAL = 320;
-        Font font = Font.loadFont(getClass().getResourceAsStream("/fonts/digital_7/digital-7.ttf"), 12);
-        System.out.println(font.getName());
+        Font font = Font.loadFont(getClass().getResourceAsStream("/digital_7/digital-7.ttf"), 12);
         weatherStation.registerObserver(this);
         Thread weatherStationFetching = new Thread(dataFetch);
         weatherStationFetching.setDaemon(true);
@@ -52,7 +51,7 @@ public class Entry extends Application implements Observer {
         Label topLeftTitle = new Label("Temperatur");
         topLeftTitle.setAlignment(Pos.TOP_CENTER);
         topLeftTitle.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
-        topLeftLabel = new Label(weatherStation.getTemperatureString() + " °C");
+        topLeftLabel = new Label(weatherStation.getTemperatureString() + " \u00B0C");
         topLeftLabel.setAlignment(Pos.CENTER);
         topLeftLabel.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
         topLeftLabel.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
@@ -118,7 +117,7 @@ public class Entry extends Application implements Observer {
     @Override
     public void update() {
         Platform.runLater(() -> {
-            topLeftLabel.setText(weatherStation.getTemperatureString() + " °C");
+            topLeftLabel.setText(weatherStation.getTemperatureString() + " \u00B0C");
             topRightLabel.setText(weatherStation.getPressureString() + " hPa");
             bottomRightLabel.setText(weatherStation.getHumidityString() + " %");
             topLeftGridPane.getChildren().remove(1);
