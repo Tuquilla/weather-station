@@ -3,6 +3,6 @@ module src {
     requires javafx.controls;
     requires sme;
     requires com.pi4j;
-    //opens data to sme;
+    opens data to sme;
     exports gui;
 }
