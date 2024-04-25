@@ -51,7 +51,7 @@ public class Entry extends Application implements Observer {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        Font font = Font.loadFont(getClass().getResourceAsStream("/font/digital-7.ttf"), 12);
+        Font.loadFont(getClass().getResourceAsStream("/font/digital-7.ttf"), 12);
         weatherStation.registerObserver(this);
         Thread weatherStationFetching = new Thread(dataFetch);
         weatherStationFetching.setDaemon(true);
