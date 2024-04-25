@@ -3,6 +3,7 @@ package gui;
 import data.DataFetch;
 import data.Observer;
 import data.WeatherStation;
+import com.pi4j.io.i2c.I2C;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
