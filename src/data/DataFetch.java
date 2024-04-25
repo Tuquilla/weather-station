@@ -11,7 +11,7 @@ public class DataFetch implements Runnable {
     public void run() {
         while(true) {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(30000);
             }
             catch (InterruptedException e) {
                 System.out.println(e);
