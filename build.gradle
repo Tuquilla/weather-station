@@ -33,7 +33,7 @@ sourceSets {
             srcDirs = ['src']
         }
         resources {
-            srcDirs = ['src/fonts']
+            srcDirs = ['src/resources']
         }
     }
 }

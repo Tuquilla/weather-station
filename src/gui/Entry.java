@@ -8,10 +8,16 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class Entry extends Application implements Observer {
 
@@ -26,6 +32,9 @@ public class Entry extends Application implements Observer {
     private Label bottomLeftLabel;
     private Label topRightLabel;
     private Label bottomRightLabel;
+    private Image weatherIcon;
+    private ImageView weatherIconView;
+    HBox weatherHBox = new HBox();
 
 
     public static void main(String[] args) {
@@ -36,11 +45,19 @@ public class Entry extends Application implements Observer {
     public void start(Stage stage) {
         final int WINDOWSSIZE_X_TOTAL = 480;
         final int WINDOWSIZE_Y_TOTAL = 320;
-        Font font = Font.loadFont(getClass().getResourceAsStream("/digital_7/digital-7.ttf"), 12);
+        try {
+            FileInputStream inputStreamIcon = new FileInputStream("src/resources/weather/cloudy.png");
+            weatherIcon = new Image(inputStreamIcon);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        Font font = Font.loadFont(getClass().getResourceAsStream("/font/digital-7.ttf"), 12);
         weatherStation.registerObserver(this);
         Thread weatherStationFetching = new Thread(dataFetch);
         weatherStationFetching.setDaemon(true);
         weatherStationFetching.start();
+
+        weatherIconView = new ImageView(weatherIcon);
 
         topLeftGridPane = new GridPane();
         bottomLeftGridPane = new GridPane();
@@ -56,13 +73,16 @@ public class Entry extends Application implements Observer {
         topLeftLabel.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
         topLeftLabel.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
 
-        Label bottomLeftTitle = new Label("Testtitel");
+        Label bottomLeftTitle = new Label("Wetter");
         bottomLeftTitle.setAlignment(Pos.TOP_CENTER);
         bottomLeftTitle.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
-        bottomLeftLabel = new Label("leer");
-        bottomLeftLabel.setAlignment(Pos.CENTER);
-        bottomLeftLabel.setPrefWidth(WINDOWSSIZE_X_TOTAL / 2.0);
-        bottomLeftLabel.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
+        weatherIconView = new ImageView(weatherIcon);
+        weatherIconView.setFitWidth(WINDOWSSIZE_X_TOTAL / 3.0);
+        weatherIconView.setFitHeight(WINDOWSIZE_Y_TOTAL / 3.0);
+        weatherHBox.setPrefHeight(WINDOWSSIZE_X_TOTAL / 2.0);
+        weatherHBox.setPrefWidth(WINDOWSIZE_Y_TOTAL / 2.0);
+        weatherHBox.getChildren().add(weatherIconView);
+        weatherHBox.setAlignment(Pos.CENTER);
 
         Label topRightTitle = new Label("Luftdruck");
         topRightTitle.setAlignment(Pos.TOP_CENTER);
@@ -83,7 +103,7 @@ public class Entry extends Application implements Observer {
         createGridPane(WINDOWSSIZE_X_TOTAL, WINDOWSIZE_Y_TOTAL, topLeftTitle, topLeftGridPane, topLeftLabel);
         topLeftGridPane.setStyle("-fx-border-color: grey; -fx-border-width: 4px 2px 2px 4px; -fx-background-color: darkgrey;");
 
-        createGridPane(WINDOWSSIZE_X_TOTAL, WINDOWSIZE_Y_TOTAL, bottomLeftTitle, bottomLeftGridPane, bottomLeftLabel);
+        createGridPane(WINDOWSSIZE_X_TOTAL, WINDOWSIZE_Y_TOTAL, bottomLeftTitle, bottomLeftGridPane, weatherHBox);
         bottomLeftGridPane.setStyle("-fx-border-color: grey; -fx-border-width: 2px 2px 4px 4px; -fx-background-color: darkgrey;");
 
         createGridPane(WINDOWSSIZE_X_TOTAL, WINDOWSIZE_Y_TOTAL, topRightTitle, topRightGridPane, topRightLabel);
@@ -109,8 +129,17 @@ public class Entry extends Application implements Observer {
         gridPane.addRow(1, label);
         gridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL/ 2.0);
         gridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
-        gridPane.getChildren().get(0).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 18;");
-        gridPane.getChildren().get(1).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 52;");
+        gridPane.getChildren().get(0).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 18; -fx-text-fill: black");
+        gridPane.getChildren().get(1).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 52; -fx-text-fill: black");
+    }
+
+    private void createGridPane(int WINDOWSSIZE_X_TOTAL, int WINDOWSIZE_Y_TOTAL, Label title, GridPane gridPane, HBox imageView) {
+        gridPane.addRow(0, title);
+        gridPane.addRow(1, imageView);
+        gridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL/ 2.0);
+        gridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
+        gridPane.getChildren().get(0).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 18; -fx-text-fill: black");
+        gridPane.getChildren().get(1).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 52; -fx-text-fill: black");
     }
 
     @Override
