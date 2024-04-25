@@ -8,12 +8,12 @@ import com.pi4j.io.i2c.I2CProvider;
 
 public class SME280 {
 
-    // Werte f�r Temperatur Kompensation
+    // Werte für Temperatur Kompensation
     private static int DIG_T1; // = 27891;
     private static short DIG_T2; // = 26250;
     private static short DIG_T3; // = 50;
 
-    // Werte f�r Druck Kompensation
+    // Werte für Druck Kompensation
     private static int DIG_P1; // = 36477;
     private static short DIG_P2; // = -10685;
     private static short DIG_P3; // = 3024;
@@ -24,7 +24,7 @@ public class SME280 {
     private static short DIG_P8; // = -11075;
     private static short DIG_P9; // = 3038;
 
-    // Werte f�r Feuchtigkeits Kompensation
+    // Werte für Feuchtigkeit Kompensation
     private static int DIG_H1; // = 75;
     private static short DIG_H2; // = 356;
     private static int DIG_H3; // = 0;
@@ -32,12 +32,12 @@ public class SME280 {
     private static short DIG_H5; // = 0;
     private static int DIG_H6; // = 30;
 
-    private Context pi4j;
-    private I2CProvider i2CProvider;
-    private I2CConfig i2cConfig;
-    private I2C bme280;
+    private final Context pi4j;
+    private final I2CProvider i2CProvider;
+    private final I2CConfig i2cConfig;
+    private final I2C bme280;
 
-    // Temperatur f�r Druck und Feuchtigkeitsformel
+    // Temperatur für Druck und Feuchtigkeitsformel
     private int t_fine;
 
     public SME280() {
@@ -84,9 +84,7 @@ public class SME280 {
     public double getTemperature() {
         int[] tempRegisterValues = readTemperatureRegisters();
         int tempRaw = getTemperatureRaw(tempRegisterValues);
-        double temperature = calculateTemp(tempRaw);
-        System.out.println("Temperatur: " + temperature + " C");
-        return temperature;
+        return calculateTemp(tempRaw);
     }
 
     private int[] readTemperatureRegisters() {
@@ -116,9 +114,7 @@ public class SME280 {
     public double getPressure() {
         int[] pressureRegisterValues = readPressureRegisters();
         int pressureRaw = getPressureRaw(pressureRegisterValues);
-        double pressure = calculatePressure(pressureRaw);
-        System.out.println("Pressure: " + pressure + " hpa");
-        return pressure;
+        return calculatePressure(pressureRaw);
     }
 
     private int[] readPressureRegisters() {
@@ -158,9 +154,7 @@ public class SME280 {
     public double getHumidity() {
         int[] humidityRegisterValues = readHumidityRegisters();
         int humidityRaw = getHumidityRaw(humidityRegisterValues);
-        double humidity = calculateHumidity(humidityRaw);
-        System.out.println("Humidity: " + humidity + " %");
-        return humidity;
+        return calculateHumidity(humidityRaw);
     }
 
     private int[] readHumidityRegisters() {
@@ -257,17 +251,6 @@ public class SME280 {
         DIG_H6 = digH6;
     }
 
-    public void start() {
-        pi4j = Pi4J.newAutoContext();
-        i2CProvider = pi4j.provider("linuxfs-i2c");
-        i2cConfig = I2C.newConfigBuilder(pi4j)
-                .id("BME280")
-                .bus(1)
-                .device(0x76)
-                .build();
-        bme280 = i2CProvider.create(i2cConfig);
-    }
-
     private void resetSensor() {
         int reset = 0xE0;
         int reset_cmd = 0xB6;
@@ -283,7 +266,7 @@ public class SME280 {
         int idValueMskBME = 0x60;
 
 
-        int rc = bme280.writeRegister(reset, reset_cmd);
+        bme280.writeRegister(reset, reset_cmd);
         // The sensor needs some time to complete POR steps
         try {
             Thread.sleep(300);

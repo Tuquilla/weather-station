@@ -3,7 +3,6 @@ package gui;
 import data.DataFetch;
 import data.Observer;
 import data.WeatherStation;
-import com.pi4j.io.i2c.I2C;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -110,7 +109,6 @@ public class Entry extends Application implements Observer {
         gridPane.addRow(1, label);
         gridPane.setPrefWidth(WINDOWSSIZE_X_TOTAL/ 2.0);
         gridPane.setPrefHeight(WINDOWSIZE_Y_TOTAL / 2.0);
-        //gridPane.getChildren().get(0).setStyle("-fx-font-family: 'Arial'; source: url('../../fonts/ds_digital/DS-DIGI.TTF'); -fx-font-size: 18; -fx-border-color: green;");
         gridPane.getChildren().get(0).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 18;");
         gridPane.getChildren().get(1).setStyle("-fx-font-family: 'Digital-7'; -fx-font-size: 52;");
     }

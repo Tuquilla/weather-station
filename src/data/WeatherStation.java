@@ -63,7 +63,6 @@ public class WeatherStation implements Subject {
     @Override
     public void notifyObserver() {
         for (Observer observer: observers) {
-            System.out.println("ich habe informiert");
             observer.update();
         }
     }
