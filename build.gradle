@@ -19,7 +19,7 @@ javafx {
 
 jlink {
     launcher {
-        name = 'testFx'
+        name = 'weatherApp'
     }
 }
 
