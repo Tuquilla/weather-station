@@ -2,11 +2,11 @@ package data;
 
 public class SME280Dummy {
 
-    final double TEMP_MIN = 18.0;
+    final double TEMP_MIN = 10.0;
     final double TEMP_MAX = 24.0;
     final double PRESSURE_MIN = 950.0;
     final double PRESSURE_MAX = 1025.0;
-    final double HUMIDITY_MIN = 60.0;
+    final double HUMIDITY_MIN = 20.0;
     final double HUMIDITY_MAX = 100.0;
 
     public double[] getSensorData() {

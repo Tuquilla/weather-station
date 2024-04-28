@@ -2,32 +2,32 @@ package data;
 
 
 import com.fazecast.jSerialComm.SerialPort;
-import sensor.SME280;
 
 import java.util.ArrayList;
 public class WeatherStation implements Subject {
 
-    private SME280 sme280;
+    private SME280Dummy sme280Dummy;
     private double temperature;
     private double pressure;
     private double humidity;
     private ArrayList<Observer> observers;
-    private final String COMPORT = "COM3";
-    private SerialPort serialPort;
+    private SerialPort serialPort = null;
 
     public WeatherStation() {
-        serialPort = SerialPort.getCommPort(COMPORT);
-        serialPort.openPort();
-        if (serialPort.isOpen());
-        else {
-            sme280 = new SME280();
+        SerialPort[] serialPorts = SerialPort.getCommPorts();
+        for (SerialPort p : serialPorts) {
+            if (p.getSystemPortName().equals("COM3") || p.getSystemPortName().equals("ttyACM0")) {
+                serialPort = p;
+                serialPort.openPort();
+            }
         }
+        sme280Dummy = new SME280Dummy();
         observers = new ArrayList<>();
         getSME280Data();
     }
 
     public void getSME280Data() {
-        if (serialPort.isOpen()) {
+            if (serialPort != null && serialPort.isOpen()) {
                 while (serialPort.bytesAvailable() == 0) {
                     try {
                         Thread.sleep(20);
@@ -39,7 +39,8 @@ public class WeatherStation implements Subject {
                 serialPort.readBytes(readBuffer, readBuffer.length);
                 String x = new String(readBuffer);
                 try {
-                    String[] data = x.split(",");
+                    String[] allBlocks = x.split("\n");
+                    String[] data = allBlocks[allBlocks.length-1].trim().split(",");
                     temperature = Double.parseDouble(data[0]);
                     pressure = Double.parseDouble(data[1]) / 100;
                     humidity = Double.parseDouble(data[2]);
@@ -47,13 +48,13 @@ public class WeatherStation implements Subject {
                 catch (Exception ignored) {
 
                 }
-        }
-        else {
-            double[] data = sme280.getSensorData();
-            temperature = data[0];
-            pressure = data[1];
-            humidity = data[2];
-        }
+            }
+            else {
+                double[] sensorData = sme280Dummy.getSensorData();
+                temperature = sensorData[0];
+                pressure = sensorData[1];
+                humidity = sensorData[2];
+            }
         notifyObserver();
     }
 

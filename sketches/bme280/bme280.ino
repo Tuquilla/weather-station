@@ -37,7 +37,10 @@ void setup()
 //////////////////////////////////////////////////////////////////
 void loop()
 {
+   Serial.flush();
+   Serial.begin(SERIAL_BAUD);
    printBME280Data(&Serial);
+   Serial.end();
    delay(2000);
 }
 
@@ -54,23 +57,9 @@ void printBME280Data
 
    bme.read(pres, temp, hum, tempUnit, presUnit);
 
-   /*
-   client->print("Temp: ");
-   */
    client->print(temp);
    client->print(",");
    client->print(pres);
    client->print(",");
    client->println(hum);
-   /*
-   client->print("°"+ String(tempUnit == BME280::TempUnit_Celsius ? 'C' :'F'));
-   client->print("\t\tHumidity: ");
-   client->print(hum);
-   client->print("% RH");
-   client->print("\t\tPressure: ");
-   client->print(pres);
-   client->println("Pa");
-   */
-
-   delay(2000);
 }
