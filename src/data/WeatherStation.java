@@ -12,7 +12,7 @@ public class WeatherStation implements Subject {
     private double pressure;
     private double humidity;
     private ArrayList<Observer> observers;
-    private final String COMPORT = "COM3";
+    private final String COMPORT = "ttyACM0";
     private SerialPort serialPort;
 
     public WeatherStation() {

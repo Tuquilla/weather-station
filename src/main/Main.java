@@ -6,7 +6,7 @@ import com.fazecast.jSerialComm.*;
 public class Main {
     public static void main(String[] args) {
 
-        SerialPort p = SerialPort.getCommPort("COM3");
+        SerialPort p = SerialPort.getCommPort("ttvACM0");
         p.openPort();
         if (p.isOpen()) {
             while(true) {
