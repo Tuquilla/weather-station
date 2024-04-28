@@ -303,4 +303,3 @@ public class SME280 {
         bme280.writeRegister(regVal, ctlVal, ctlVal.length);
     }
 }
-

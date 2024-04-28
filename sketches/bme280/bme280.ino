@@ -54,8 +54,15 @@ void printBME280Data
 
    bme.read(pres, temp, hum, tempUnit, presUnit);
 
+   /*
    client->print("Temp: ");
+   */
    client->print(temp);
+   client->print(",");
+   client->print(pres);
+   client->print(",");
+   client->println(hum);
+   /*
    client->print("°"+ String(tempUnit == BME280::TempUnit_Celsius ? 'C' :'F'));
    client->print("\t\tHumidity: ");
    client->print(hum);
@@ -63,6 +70,7 @@ void printBME280Data
    client->print("\t\tPressure: ");
    client->print(pres);
    client->println("Pa");
+   */
 
-   delay(1000);
+   delay(2000);
 }
