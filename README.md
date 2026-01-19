@@ -1,5 +1,5 @@
 # Weather station gui
-For raspberry-pi with screen and sme-280 temperature & humidity sensor
+For raspberry-pi with screen and sme-280 temperature & humidity sensor. The arduino sketch is attached in the `./sketches` folder. 
 
 ## Requirements
 
